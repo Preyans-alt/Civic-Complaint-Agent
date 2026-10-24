@@ -1,0 +1,198 @@
+{
+  "wards": [
+    {
+      "id": "W12",
+      "name": "Navrangpura",
+      "zone": "West",
+      "areas": ["Navrangpura", "Stadium", "CG Road", "Mithakhali", "Commerce Six Roads"]
+    },
+    {
+      "id": "W27",
+      "name": "Maninagar",
+      "zone": "South",
+      "areas": ["Maninagar", "Kankaria", "Jawahar Chowk", "Rambaug", "Balvatika"]
+    },
+    {
+      "id": "W15",
+      "name": "Bodakdev",
+      "zone": "North West",
+      "areas": ["Bodakdev", "Sindhu Bhavan", "Judges Bungalow", "Pakwan Cross Road"]
+    },
+    {
+      "id": "W04",
+      "name": "Satellite",
+      "zone": "West",
+      "areas": ["Satellite", "Shivranjani", "Prahlad Nagar", "Jodhpur Cross Road"]
+    },
+    {
+      "id": "W09",
+      "name": "Vastrapur",
+      "zone": "West",
+      "areas": ["Vastrapur", "IIM Road", "Vastrapur Lake", "Himmatlal Park"]
+    },
+    {
+      "id": "W18",
+      "name": "Paldi",
+      "zone": "West",
+      "areas": ["Paldi", "Anandnagar", "Fatehpura", "Bhattha", "Ellis Bridge"]
+    },
+    {
+      "id": "W22",
+      "name": "Jamalpur",
+      "zone": "Central",
+      "areas": ["Jamalpur", "Geeta Mandir", "Khadia", "Astodia", "Raipur"]
+    },
+    {
+      "id": "W31",
+      "name": "Sabarmati",
+      "zone": "West",
+      "areas": ["Sabarmati", "Dharamnagar", "RTO", "Motera", "Chandkheda"]
+    }
+  ],
+  "departments": {
+    "pothole": "Roads & Buildings",
+    "garbage": "Solid Waste Management",
+    "streetlight": "Light Department",
+    "waterlogging": "Storm Water Drainage"
+  },
+  "complaints": [
+    {
+      "trackingId": "AMC-2026-000123",
+      "ward": "W12",
+      "wardName": "Navrangpura",
+      "zone": "West",
+      "issue": "pothole",
+      "department": "Roads & Buildings",
+      "area": "Navrangpura",
+      "landmark": "Near Municipal Market, CG Road",
+      "description": "Large deep pothole on main transit corridor causing severe traffic disruption and two-wheeler skid hazard.",
+      "severity": "high",
+      "status": "In Progress",
+      "filedAt": "2026-10-24T17:20:00+05:30",
+      "evidence": [
+        "Deep depression in asphalt",
+        "Exposed aggregate",
+        "Hazardous edge"
+      ],
+      "confidence": 0.94,
+      "citizenName": "Kunal Shah",
+      "citizenContact": "+91 98250 XXXXX",
+      "statusHistory": [
+        {
+          "status": "Submitted",
+          "timestamp": "2026-10-24T17:20:00+05:30",
+          "note": "Complaint filed with photo verification via CivicFlow AI."
+        },
+        {
+          "status": "Assigned",
+          "timestamp": "2026-10-24T17:25:00+05:30",
+          "note": "Assigned to West Zone Roads & Buildings maintenance team."
+        },
+        {
+          "status": "In Progress",
+          "timestamp": "2026-10-24T18:10:00+05:30",
+          "note": "Field engineer dispatched for road patchwork patch material staging."
+        }
+      ]
+    },
+    {
+      "trackingId": "AMC-2026-000124",
+      "ward": "W27",
+      "wardName": "Maninagar",
+      "zone": "South",
+      "issue": "garbage",
+      "department": "Solid Waste Management",
+      "area": "Kankaria",
+      "landmark": "Near Gate No. 3, Kankaria Lakefront",
+      "description": "Overflowing waste bin with organic waste spilling onto walkway.",
+      "severity": "medium",
+      "status": "Assigned",
+      "filedAt": "2026-10-24T15:45:00+05:30",
+      "evidence": [
+        "Spilled household refuse",
+        "Overflowing municipal bin"
+      ],
+      "confidence": 0.91,
+      "citizenName": "Pooja Vora",
+      "citizenContact": "+91 94280 XXXXX",
+      "statusHistory": [
+        {
+          "status": "Submitted",
+          "timestamp": "2026-10-24T15:45:00+05:30",
+          "note": "Complaint submitted via CivicFlow AI."
+        },
+        {
+          "status": "Assigned",
+          "timestamp": "2026-10-24T16:00:00+05:30",
+          "note": "Routed to South Zone Solid Waste Management collection crew."
+        }
+      ]
+    },
+    {
+      "trackingId": "AMC-2026-000125",
+      "ward": "W04",
+      "wardName": "Satellite",
+      "zone": "West",
+      "issue": "streetlight",
+      "department": "Light Department",
+      "area": "Satellite",
+      "landmark": "Shivranjani Cross Roads, near BRTS corridor",
+      "description": "Pole streetlight flickering continuously and three adjacent streetlights unlit at night.",
+      "severity": "medium",
+      "status": "Resolved",
+      "filedAt": "2026-10-23T20:10:00+05:30",
+      "evidence": [
+        "Dark street section",
+        "Damaged luminaire housing"
+      ],
+      "confidence": 0.88,
+      "citizenName": "Nilesh Dave",
+      "citizenContact": "+91 97120 XXXXX",
+      "statusHistory": [
+        {
+          "status": "Submitted",
+          "timestamp": "2026-10-23T20:10:00+05:30",
+          "note": "Complaint filed via CivicFlow AI."
+        },
+        {
+          "status": "Assigned",
+          "timestamp": "2026-10-23T20:40:00+05:30",
+          "note": "Assigned to Light Department emergency night patrol."
+        },
+        {
+          "status": "Resolved",
+          "timestamp": "2026-10-24T09:30:00+05:30",
+          "note": "Faulty LED driver and wire junction replaced by electrical team."
+        }
+      ]
+    },
+    {
+      "trackingId": "AMC-2026-000126",
+      "ward": "W12",
+      "wardName": "Navrangpura",
+      "zone": "West",
+      "issue": "waterlogging",
+      "department": "Storm Water Drainage",
+      "area": "CG Road",
+      "landmark": "Opposite Stadium Circle underpass",
+      "description": "Stormwater drain catchpit choked with silt, causing 8 inches water stagnation after unseasonal rain.",
+      "severity": "critical",
+      "status": "Submitted",
+      "filedAt": "2026-10-24T18:05:00+05:30",
+      "evidence": [
+        "Submerged road curbs",
+        "Clogged gully grate with debris"
+      ],
+      "confidence": 0.95,
+      "citizenName": "Bhavin Trivedi",
+      "citizenContact": "+91 99090 XXXXX",
+      "statusHistory": [
+        {
+          "status": "Submitted",
+          "timestamp": "2026-10-24T18:05:00+05:30",
+          "note": "High priority waterlogging complaint logged."
+        }
+      ]
+    }
+  ]
+}

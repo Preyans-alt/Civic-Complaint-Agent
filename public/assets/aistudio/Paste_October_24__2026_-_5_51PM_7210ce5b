@@ -1,0 +1,902 @@
+# BUILD A COMPLETE CIVIC COMPLAINT AGENT — AHMEDABAD MUNICIPAL CORPORATION DEMO
+
+Act as a senior full-stack engineer, AI agent architect, UI/UX designer, and QA engineer. Build a complete, runnable, polished product named **CivicFlow AI — Intelligent Civic Complaint Assistant for Ahmedabad**.
+
+Do not merely generate a landing page, wireframe, prototype, or static dashboard. Build a working end-to-end application with real image analysis through Gemini, real backend tool execution, persistent mock complaint records, complaint tracking, validation, error handling, and a professional user interface.
+
+## 1. Core objective
+
+Create an AI agent that helps citizens report:
+
+- Potholes and damaged roads
+- Garbage accumulation and overflowing bins
+- Broken or malfunctioning streetlights
+- Waterlogging and blocked stormwater drains
+
+The citizen uploads a photograph, provides an area or location, reviews the AI analysis, and submits a complaint. The agent resolves the ward, identifies the responsible department, creates a complaint in a local mock AMC database, and returns a unique tracking ID.
+
+The citizen can later enter the tracking ID or ask the agent a natural-language question such as:
+
+- "What is the status of my complaint?"
+- "Show my complaint details."
+- "Which department is handling AMC-2026-000124?"
+- "Where was this complaint registered?"
+
+The status must be retrieved from the actual saved database record, never invented by the LLM.
+
+This is a demonstration system, not an official Ahmedabad Municipal Corporation service. Clearly disclose this in the UI. Never claim that a complaint was submitted to the real AMC.
+
+## 2. Strict technology constraints
+
+Use Google technologies for AI, mapping, development, and deployment.
+
+Frontend:
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Lucide React icons
+- React Router for navigation if needed
+
+Backend:
+- Python 3.11+
+- FastAPI
+- Pydantic
+- Official Google Gen AI Python SDK (`google-genai`)
+- Python standard library for JSON file persistence
+
+AI:
+- Gemini multimodal image understanding
+- Gemini structured output or schema-constrained responses where appropriate
+- Gemini function calling for agent tools
+- A configurable Gemini model ID via `GEMINI_MODEL`
+- Prefer `gemini-4-argon` only if available to the configured account; otherwise use a currently available Gemini model
+
+Location:
+- Google Maps Platform Geocoding API when configured
+- A reliable manual area-to-ward lookup that works without a Maps API key
+
+Hosting:
+- Firebase Hosting for the frontend
+- Google Cloud Run for the FastAPI backend
+
+Do not use OpenAI, Anthropic, Groq, Hugging Face hosted inference, Supabase, MongoDB, PostgreSQL, or any other non-Google AI or hosting provider.
+
+Do not require Firebase or cloud deployment just to run locally. The entire MVP must work on a developer's machine with a Gemini API key and a local JSON database.
+
+Use a single clear source of truth for issue types, ward mappings, departments, and complaint records.
+
+## 3. Professional UI/UX design
+
+Design a high-quality civic technology product, not a generic AI chatbot template.
+
+Product identity:
+- Product name: CivicFlow AI
+- Subtitle: AI-powered civic issue reporting
+- City: Ahmedabad, Gujarat, India
+- Visual style: trustworthy civic infrastructure software, clean, modern, restrained
+- Main background: warm off-white or very light gray
+- Primary color: deep indigo or navy
+- Accent: restrained teal
+- Cards: white, subtle borders, moderate rounded corners, soft shadows
+- Typography: Inter or a similarly readable sans-serif font
+- Use consistent spacing, icons, labels, hover states, and loading skeletons
+- Use a responsive desktop, tablet, and mobile layout
+- Avoid excessive gradients, oversized headings, emojis as icons, and unnecessary animations
+
+Create these routes or equivalent application sections:
+
+### A. Main dashboard
+
+Header:
+- CivicFlow AI logo
+- "Ahmedabad Civic Assistant"
+- Demo environment indicator
+- Navigation: Report an Issue, Track Complaint, All Complaints
+
+Dashboard summary:
+- Total registered demo complaints
+- Open complaints
+- Resolved complaints
+- High-severity complaints
+
+Compute all counts from the database. Never hardcode dashboard statistics.
+
+Main reporting panel:
+- Clear title: "Report a civic issue"
+- Short instruction: "Upload a photo and tell us where the issue is."
+- Large drag-and-drop upload zone
+- Browse files button
+- Image preview with remove/replace action
+- Accepted formats: JPEG, PNG, and WebP
+- Maximum image size: 8 MB
+- Area name input with suggestions from the local ward dataset
+- Optional landmark input
+- Optional latitude and longitude fields or a map-based location picker when Google Maps is configured
+- Optional citizen name and contact information; do not require sensitive personal information for the demo
+- Primary action: "Analyze Issue"
+- Disable submission while validation or analysis is running
+
+Allow users to upload a photo or select a supplied sample image. Include clearly labeled sample images only if real sample assets are actually provided in the project. Never display a sample image as though it were the user's upload.
+
+### B. AI analysis review
+
+After image analysis, display a structured result card containing:
+
+- Detected issue
+- Plain-language description
+- Severity: Low, Medium, High, or Critical
+- Confidence score, if supported by the model output
+- Visible evidence from the image
+- Suggested department
+- Selected area
+- Selected ward and zone
+- Any location uncertainty or issue ambiguity
+
+Include a clear warning that the AI's classification and severity are estimates, not official engineering assessments.
+
+Use a review-and-confirm step before creating the complaint. The user must be able to correct the issue category and location.
+
+Provide:
+- "Edit details"
+- "Confirm and File Complaint"
+- "Cancel"
+
+Do not create a complaint merely because the image analysis completed.
+
+### C. Agent execution timeline
+
+Show a clean, readable sequence of real backend events:
+
+1. Validating uploaded image
+2. Analyzing the image with Gemini
+3. Resolving the submitted location
+4. Looking up the AMC ward
+5. Finding the responsible department
+6. Checking for duplicate submissions
+7. Creating the mock AMC complaint
+8. Confirming the saved tracking record
+
+Each step should display pending, running, completed, or failed status.
+
+The timeline must be driven by actual backend events or structured API results, not by a fake frontend timer.
+
+If an operation fails, show the actual failure and allow the user to retry safely.
+
+### D. Complaint receipt
+
+After successful creation, show a professional success screen containing:
+
+- Tracking ID, prominently displayed
+- Issue category
+- Location and landmark
+- Ward name and ID
+- Zone
+- Responsible department
+- Severity
+- Submission timestamp in Asia/Kolkata time
+- Current status
+- Complaint description
+- A simple status timeline
+
+Provide working actions:
+- Copy tracking ID
+- View complaint details
+- Track this complaint
+- Return to dashboard
+- Draft a social media post
+
+Only show success after the backend confirms that the complaint has been saved.
+
+### E. Complaint tracking
+
+Create a dedicated tracking page with:
+- Tracking ID input
+- Search button
+- Enter-key support
+- Loading state
+- Not-found state
+- Complaint details
+- Current status
+- Assigned department
+- Ward and location
+- Filed date
+- Status history
+
+Support natural-language status questions through Gemini tool calling.
+
+For example, the user can type:
+"Please check AMC-2026-000124."
+
+The agent must call the actual `get_complaint_status` backend tool, retrieve the corresponding saved record, and summarize its real status.
+
+If a tracking ID does not exist, explicitly say that no matching demo complaint was found.
+
+### F. All complaints page
+
+Build a searchable, filterable complaints table with:
+- Tracking ID
+- Issue type
+- Location
+- Ward
+- Department
+- Severity
+- Status
+- Submission date
+- View details action
+
+Filters:
+- Issue category
+- Status
+- Severity
+- Ward
+- Search by tracking ID or area
+
+Include empty states, pagination if necessary, and responsive mobile cards.
+
+Do not fabricate records to make the dashboard look populated. Use the provided starter record and optionally include a small, clearly documented seed dataset for demonstrations.
+
+### G. Social media draft panel
+
+After a complaint is filed, provide an optional feature that drafts a civic awareness post.
+
+The draft may contain:
+- Issue description
+- Area and ward
+- Tracking ID
+- Relevant suggested tags
+- A reference to the attached image if available
+
+Make the post editable and provide a copy-to-clipboard action.
+
+Use neutral wording and avoid defamatory claims or unverified accusations.
+
+Do not claim that a post was published. Do not implement automatic posting to X or Instagram. This feature only drafts text for the user to publish manually.
+
+## 4. Real Gemini image analysis
+
+Implement actual multimodal analysis on the backend using the official Google Gen AI SDK.
+
+The backend receives the uploaded image, validates its content type and size, and sends the image to Gemini.
+
+Ask Gemini to classify the image into exactly one of:
+
+- pothole
+- garbage
+- streetlight
+- waterlogging
+- other
+- unclear
+
+Return structured data similar to:
+
+{
+  "issue_type": "pothole",
+  "description": "A visible depression and damaged section of road surface.",
+  "severity": "high",
+  "confidence": 0.91,
+  "evidence": [
+    "Visible broken asphalt",
+    "Uneven road surface"
+  ],
+  "is_civic_issue": true,
+  "needs_manual_review": false
+}
+
+These values are illustrative examples, not hardcoded model outputs.
+
+Requirements:
+- Use a schema or validated Pydantic model.
+- Validate every field returned by Gemini.
+- Do not trust model-generated JSON without validation.
+- Do not let Gemini generate tracking IDs or write directly to the database.
+- Do not allow the model to invent an image GPS location.
+- Treat EXIF GPS as optional and untrusted. Extract it only when present and supported; never assume that every photo contains GPS.
+- If the image is irrelevant, too blurry, ambiguous, or not a civic issue, return an appropriate response and request a better image or manual review.
+- If the issue is `other` or `unclear`, allow manual correction before filing.
+- Confidence values must be represented as estimates, not calibrated probabilities.
+- Avoid claiming that an image classifier is a specialized trained detection model when using general-purpose Gemini vision.
+
+Add image validation, error handling, reasonable request timeouts, and useful logs without logging API keys or unnecessary personal information.
+
+## 5. Implement genuine agent tool calling
+
+Use Gemini function calling to let the model select tools and receive their results.
+
+The tools must be implemented as actual Python functions with typed inputs, validation, and predictable return values.
+
+Create these tools:
+
+### Tool 1: `analyze_civic_image`
+
+Purpose: Analyze an uploaded photo using Gemini multimodal understanding.
+
+Input:
+- Image data supplied by the backend
+- Optional user context
+
+Output:
+- Validated issue category
+- Description
+- Severity
+- Evidence
+- Confidence estimate
+- Review requirement
+
+The initial image analysis may be performed directly by the backend before the agent decides subsequent steps. Do not send large image payloads unnecessarily through every tool call.
+
+### Tool 2: `resolve_location`
+
+Purpose: Resolve the citizen's area, landmark, or available coordinates.
+
+Input:
+- Area name
+- Optional landmark
+- Optional coordinates
+
+Output:
+- Normalized location
+- Matched area
+- Match method
+- Whether user confirmation is needed
+
+Use Google Maps Geocoding API only when configured and appropriate. Fall back to local mappings if the API is unavailable.
+
+Do not infer a precise location solely from visual content in a photograph.
+
+### Tool 3: `lookup_ward`
+
+Purpose: Match the normalized area to a known ward.
+
+Output:
+- Ward ID
+- Ward name
+- Zone
+- Matched area
+- Match confidence or match quality
+- Any ambiguity requiring confirmation
+
+Use the local ward dataset as the authoritative source for this mock AMC implementation.
+
+Never let Gemini invent a ward ID or choose an unknown ward.
+
+### Tool 4: `lookup_department`
+
+Purpose: Map the confirmed issue type to its responsible department.
+
+Mappings:
+- pothole → Roads & Buildings
+- garbage → Solid Waste Management
+- streetlight → Light Department
+- waterlogging → Storm Water Drainage
+
+Output:
+- Issue category
+- Department name
+- Mapping source
+
+If the issue is `other` or `unclear`, do not automatically assign an unrelated department. Request manual review.
+
+### Tool 5: `check_duplicate_complaint`
+
+Purpose: Find potentially duplicate complaints using the local JSON database.
+
+Use a simple, explainable matching approach:
+- Same or similar issue category
+- Same ward
+- Same normalized area
+- Recent submission window, such as 24 hours
+
+Return candidate records and matching reasons.
+
+A potential duplicate must not automatically block a new complaint. Show the user a warning and let them decide whether to continue or open the existing record.
+
+### Tool 6: `create_complaint`
+
+Purpose: Create a complaint in the local mock AMC database.
+
+Inputs:
+- Confirmed issue category
+- Validated description
+- Severity
+- Ward ID
+- Department
+- Area and optional landmark
+- Optional coordinates
+- User-confirmed submission
+- Optional image reference or stored image path
+
+The tool must:
+1. Validate all required fields.
+2. Verify the ward exists.
+3. Verify the issue category maps to the selected department.
+4. Verify user confirmation was received.
+5. Generate a unique tracking ID on the backend.
+6. Store the record in the JSON database.
+7. Record the filing timestamp in ISO 8601 format with timezone.
+8. Store an initial status of `Submitted`.
+9. Store an initial status-history entry.
+10. Return the saved record and tracking ID.
+
+Never allow Gemini to execute arbitrary Python, SQL, filesystem paths, or shell commands.
+
+### Tool 7: `get_complaint_status`
+
+Purpose: Fetch a complaint by tracking ID from the saved database.
+
+Return:
+- Tracking ID
+- Current status
+- Issue
+- Location
+- Ward
+- Department
+- Filed timestamp
+- Status history
+
+The model may summarize the tool result, but all factual status details must originate from the database.
+
+### Tool 8: `list_complaints`
+
+Purpose: Retrieve complaint records for the dashboard and administrative filters.
+
+Return only the records and fields required by the current query.
+
+### Tool 9: `update_complaint_status`
+
+Purpose: Update a demo complaint status through a clearly labeled administrative action.
+
+Allowed statuses:
+- Submitted
+- Assigned
+- In Progress
+- Resolved
+- Rejected
+
+Validate transitions and preserve status history, including the previous status, new status, timestamp, and a short explanation.
+
+Only expose this tool through an explicitly authorized demo-admin workflow. Do not let an ordinary citizen change their complaint status by prompting Gemini.
+
+### Tool 10: `draft_social_post`
+
+Purpose: Draft, but never publish, a social media post from the saved complaint record.
+
+Return editable text with the tracking ID and suggested tags.
+
+## 6. Agent orchestration and safety
+
+Implement an explicit agent workflow in the backend.
+
+Expected filing workflow:
+
+1. Receive and validate the photo and location input.
+2. Analyze the image with Gemini.
+3. Return the analysis for citizen review.
+4. Wait for explicit user confirmation.
+5. Resolve the location.
+6. Match the location to a valid ward.
+7. Look up the responsible department.
+8. Check for potential duplicates.
+9. If the ward is ambiguous, request clarification instead of guessing.
+10. Create the complaint only after all required checks pass.
+11. Read back the saved record.
+12. Return a structured receipt.
+
+Use Gemini function calling for meaningful decisions, such as selecting the next appropriate lookup or retrieval tool and explaining the results.
+
+The application must enforce critical business rules in Python, independently of the LLM. In particular, the model cannot override ward mappings, invent complaint IDs, bypass user confirmation, or mark a complaint resolved without a validated administrative action.
+
+Implement a bounded function-calling loop with:
+- Maximum tool-call iterations
+- Explicit tool registry
+- Typed argument validation
+- Tool error handling
+- No arbitrary code execution
+- No unapproved write operations
+
+Do not create an unrestricted chatbot that has access to every operation.
+
+For the initial submission workflow, keep the critical sequence deterministic and auditable. Use the LLM where it adds value; do not force every step through a separate AI request.
+
+Expose actual tool execution events to the frontend through a structured response or streaming mechanism.
+
+If a tool fails, report the failure accurately. Do not display a successful receipt when database persistence failed.
+
+## 7. Mock AMC database
+
+Create a local data directory with:
+
+`backend/data/amc.json`
+
+Initialize it using this structure:
+
+{
+  "wards": [
+    {
+      "id": "W12",
+      "name": "Navrangpura",
+      "zone": "West",
+      "areas": ["Navrangpura", "Stadium", "CG Road"]
+    },
+    {
+      "id": "W27",
+      "name": "Maninagar",
+      "zone": "South",
+      "areas": ["Maninagar", "Kankaria", "Jawahar Chowk"]
+    }
+  ],
+  "departments": {
+    "pothole": "Roads & Buildings",
+    "garbage": "Solid Waste Management",
+    "streetlight": "Light Department",
+    "waterlogging": "Storm Water Drainage"
+  },
+  "complaints": [
+    {
+      "trackingId": "AMC-2026-000123",
+      "ward": "W12",
+      "issue": "pothole",
+      "department": "Roads & Buildings",
+      "area": "Navrangpura",
+      "description": "Existing sample complaint for demonstration.",
+      "severity": "medium",
+      "status": "Assigned",
+      "filedAt": "2026-10-24T17:20:00+05:30",
+      "statusHistory": [
+        {
+          "status": "Submitted",
+          "timestamp": "2026-10-24T17:20:00+05:30",
+          "note": "Sample record initialized for the demo."
+        },
+        {
+          "status": "Assigned",
+          "timestamp": "2026-10-24T17:25:00+05:30",
+          "note": "Sample assignment event."
+        }
+      ]
+    }
+  ]
+}
+
+The timestamps above belong to sample data only.
+
+Important implementation rules:
+- Do not overwrite existing complaint records at startup.
+- Generate sequential IDs safely within the local demo environment.
+- Use a file lock or another appropriate local synchronization strategy when reading and writing.
+- Write atomically using a temporary file and `os.replace`.
+- Handle missing, malformed, or inaccessible JSON files gracefully.
+- Preserve existing records when adding or updating complaints.
+- Store timestamps using the `Asia/Kolkata` timezone.
+- Never use a hardcoded list of complaints as the live database.
+- Clearly document that a local JSON file is suitable for a single-process demonstration, not a production, multi-instance database.
+- Do not claim production-grade concurrency or durability.
+
+Tracking ID format:
+`AMC-YYYY-NNNNNN`
+
+The backend generates this ID. Ensure that a failed write never returns a successful tracking receipt.
+
+## 8. Location matching
+
+Implement normalization:
+- Trim leading and trailing spaces.
+- Compare names case-insensitively.
+- Normalize repeated whitespace.
+- Support known aliases where appropriate.
+- Match exact area names first.
+- Show suggestions for partial matches.
+- Do not automatically choose the first result when multiple areas are plausible.
+
+For the supplied starter dataset:
+- Navrangpura, Stadium, CG Road → W12
+- Maninagar, Kankaria, Jawahar Chowk → W27
+
+These are demo mappings, not a complete or authoritative AMC ward map.
+
+If a citizen enters an unknown area:
+- Show a helpful message.
+- Suggest valid known demo areas.
+- Allow the user to correct the location.
+- Never fabricate a ward or silently assign W12.
+
+If Google Maps is configured, use its result to help normalize the location, but still require a valid match to the local ward dataset before filing.
+
+## 9. Backend API
+
+Implement and document these REST endpoints:
+
+- `GET /api/health`
+- `GET /api/wards`
+- `GET /api/departments`
+- `POST /api/analyze`
+- `POST /api/resolve-location`
+- `POST /api/check-duplicate`
+- `POST /api/complaints`
+- `GET /api/complaints`
+- `GET /api/complaints/{tracking_id}`
+- `GET /api/complaints/{tracking_id}/status`
+- `POST /api/agent/chat`
+- `POST /api/admin/complaints/{tracking_id}/status`
+- `POST /api/complaints/{tracking_id}/social-draft`
+
+Use Pydantic request and response schemas.
+
+Use proper HTTP status codes, structured error responses, request validation, upload limits, and CORS configured through environment variables.
+
+The analyze endpoint must not create a complaint. The complaint creation endpoint must independently revalidate all required inputs.
+
+For the admin endpoint, implement a lightweight, explicit demo-admin authorization mechanism or development-only protection. Never leave unrestricted status modification exposed in a public deployment.
+
+Generate an OpenAPI specification automatically through FastAPI.
+
+## 10. Frontend integration
+
+Connect every UI action to the actual backend.
+
+Use a centralized typed API client. Do not scatter raw fetch calls across components.
+
+Implement:
+- Upload validation
+- Image previews
+- Loading and disabled states
+- Form validation
+- Clear API error messages
+- Retry actions
+- Success and error notifications
+- Tracking lookup
+- Dashboard refresh after a complaint is filed
+- Copy-to-clipboard functionality
+- Mobile-friendly navigation
+- Accessible keyboard navigation and form labels
+
+Keep the UI separate from business logic.
+
+Do not use local mock arrays to simulate successful API responses. All complaint data shown in the dashboard and tracking page must come from the backend.
+
+The frontend can use locally supplied sample images for demonstration, but never fake the result of Gemini analysis.
+
+## 11. Environment configuration and security
+
+Create:
+- `backend/.env.example`
+- `frontend/.env.example`
+- Appropriate `.gitignore` files
+
+Backend environment variables:
+
+`GEMINI_API_KEY=`
+`GEMINI_MODEL=`
+`GOOGLE_MAPS_API_KEY=`
+`CORS_ORIGINS=http://localhost:5173`
+`DATA_FILE=./data/amc.json`
+`DEMO_ADMIN_TOKEN=`
+
+Use a currently supported Gemini model as the fallback default if the requested model is unavailable. Document how to choose a model that the account can actually access.
+
+Security requirements:
+- Never expose `GEMINI_API_KEY` or `GOOGLE_MAPS_API_KEY` in frontend JavaScript.
+- Keep Gemini calls on the backend.
+- Never commit `.env` files or secrets.
+- Validate MIME types, file size, and image content.
+- Sanitize user-controlled text.
+- Never use a user-provided filename as a filesystem path.
+- Avoid storing unnecessary personal information.
+- Do not expose the admin token in frontend source code.
+- Restrict the demo admin functionality appropriately.
+- Configure Google Maps API restrictions where applicable.
+- Add basic request limits or safeguards against accidental repeated submissions.
+- Use an idempotency mechanism or equivalent protection against duplicate writes caused by retries.
+
+Do not pretend a local JSON database provides real authentication, audit-grade security, or production-grade persistence.
+
+## 12. Suggested project structure
+
+Create a clean, maintainable repository:
+
+civicflow-ai/
+  README.md
+  .gitignore
+  backend/
+    app/
+      main.py
+      config.py
+      api/
+        health.py
+        wards.py
+        analyze.py
+        complaints.py
+        agent.py
+        admin.py
+      schemas/
+        image_analysis.py
+        complaint.py
+        agent.py
+      services/
+        gemini_service.py
+        location_service.py
+        ward_service.py
+        department_service.py
+        complaint_service.py
+        duplicate_service.py
+        agent_service.py
+      tools/
+        registry.py
+        image_tools.py
+        location_tools.py
+        complaint_tools.py
+      storage/
+        json_store.py
+      data/
+        amc.json
+    tests/
+      test_wards.py
+      test_complaints.py
+      test_tracking.py
+      test_json_store.py
+      test_agent_tools.py
+    requirements.txt
+    .env.example
+    Dockerfile
+  frontend/
+    src/
+      app/
+      components/
+      pages/
+      features/
+        reporting/
+        tracking/
+        complaints/
+        agent/
+      services/
+        api.ts
+      types/
+      hooks/
+      styles/
+      main.tsx
+    public/
+    package.json
+    .env.example
+    index.html
+    vite.config.ts
+  firebase.json
+  README.md
+
+You may adjust the structure when technically justified, but keep the frontend, backend, services, tools, schemas, and storage logically separated.
+
+Do not create empty placeholder modules for features you claim to have implemented.
+
+## 13. Testing requirements
+
+Write and run meaningful automated tests.
+
+At minimum, test:
+1. Exact ward match for Navrangpura.
+2. Exact ward match for Kankaria.
+3. Unknown area handling.
+4. Ambiguous location handling.
+5. Valid department lookup.
+6. Invalid issue category rejection.
+7. Complaint creation with a valid ward.
+8. Complaint creation with an invalid ward.
+9. Unique tracking ID generation.
+10. Fetching an existing complaint.
+11. Handling a nonexistent tracking ID.
+12. Status updates and history preservation.
+13. Duplicate detection.
+14. JSON atomic writes and malformed-file errors.
+15. Image type and size validation.
+16. Agent tool argument validation.
+17. Failure handling when the Gemini API is unavailable.
+18. Failure handling when a database write fails.
+
+Mock the Gemini client in automated unit tests. Do not require paid API calls to run the test suite.
+
+Add an integration test for the complete report-and-track flow using a mocked AI response.
+
+Run the frontend build and backend tests. Fix actual errors before claiming success.
+
+Do not report tests as passing unless they have actually been executed successfully.
+
+## 14. README and developer experience
+
+Write a complete README containing:
+- Project overview
+- Architecture
+- Technology stack
+- Agent workflow
+- Tool descriptions
+- Directory structure
+- Prerequisites
+- Google AI Studio API key setup
+- Optional Google Maps API setup
+- Local installation
+- Environment configuration
+- Frontend and backend startup commands
+- API documentation URL
+- Running tests
+- Example complaint submission
+- Example status lookup
+- Deployment instructions
+- Limitations
+- Privacy and security notes
+- Clear statement that this is a mock AMC demo, not an official complaint channel
+
+Provide exact Windows PowerShell commands as well as Unix-style commands when relevant.
+
+## 15. Deployment
+
+Make the project deployable without making deployment mandatory for local development.
+
+For deployment:
+- Use Firebase Hosting for the React frontend.
+- Use Google Cloud Run for the Python API.
+- Configure the Firebase Hosting rewrite to route `/api/**` to the Cloud Run backend where appropriate.
+- Keep secrets in Cloud Run environment configuration or Google Cloud Secret Manager.
+- Document CORS, allowed origins, model access, and Google Maps API setup.
+- Explain that the JSON database is not appropriate for a horizontally scaled Cloud Run production deployment because instances may have separate filesystems and ephemeral storage.
+- Do not deploy or connect to a real AMC portal.
+- Do not claim that a deployment occurred unless it actually did.
+
+If time permits, add a clearly documented path to replace local JSON persistence with a suitable Google Cloud database in a future production version. Do not add unnecessary cloud infrastructure to the local MVP.
+
+## 16. Priorities for the 2.5-hour build
+
+Prioritize a complete working vertical slice over excessive features.
+
+Priority 1:
+- Professional React UI
+- Upload and actual Gemini image analysis
+- Manual area selection
+- Correct ward and department mapping
+- User confirmation
+- Real mock complaint creation
+- Tracking ID generation
+- Actual status retrieval
+
+Priority 2:
+- Real agent tool calls and visible execution timeline
+- Complaint dashboard
+- Duplicate detection
+- Tests and useful error states
+
+Priority 3:
+- Optional Google Maps integration
+- Social media draft
+- Firebase and Cloud Run deployment configuration
+
+If the deadline becomes tight, simplify secondary features rather than faking core functionality.
+
+## 17. Execution instructions
+
+Work directly in the current Antigravity workspace.
+
+First inspect the existing files. Preserve working code if a project already exists.
+
+Then:
+1. Create an implementation plan.
+2. Build the backend and JSON storage.
+3. Implement Gemini image analysis and the tool registry.
+4. Build the frontend.
+5. Integrate all API calls.
+6. Run backend tests and the frontend build.
+7. Fix errors.
+8. Verify the main end-to-end workflow.
+9. Write the README and environment examples.
+10. Summarize exactly what works, what was tested, and what requires API keys.
+
+Do not stop after creating the plan. Continue implementing the project.
+
+Do not ask unnecessary questions. Make sensible engineering decisions and document assumptions.
+
+If an API key is missing, implement the genuine integration and explain how to configure it; never silently substitute a fake AI result.
+
+If an external API is unavailable, handle the error honestly and preserve the manual location fallback.
+
+The final acceptance test is:
+
+A user uploads a real civic issue photograph, enters "Navrangpura", receives an actual Gemini analysis, reviews and confirms it, sees the backend resolve W12 and Roads & Buildings, receives a newly generated tracking ID after a real JSON write, opens the tracking page, enters that ID, and receives the actual saved complaint status.
+
+Build this complete flow first. Then improve the design and add secondary features.
+
+The result must be a professional, credible, runnable hackathon MVP with working code, real agent tools, proper inputs, and honest limitations.

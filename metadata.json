@@ -1,0 +1,8 @@
+{
+  "name": "CivicFlow AI — Ahmedabad Civic Assistant",
+  "description": "AI-powered civic complaint reporting, multimodal issue verification, ward resolution, and tracking assistant for Ahmedabad Municipal Corporation demo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
